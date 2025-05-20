@@ -23,7 +23,7 @@ I'm passionate about cybersecurity and love tackling complex challenges through 
 
 [twitter]: https://twitter.com/__ebibama_________
 [youtube]: https://www.youtube.com/c/___________
-[instagram]: https://www.instagram.com/___________
+[instagram]: https://www.instagram.com/_enochbibama__________
 [linkedin]: https://linkedin.com/in/____enochebibama_______
 
 <!--
