@@ -1,0 +1,49 @@
+
+#.SYNOPSIS
+    This PowerShell Script to disable "Logoff Success" auditing policy
+
+.NOTES
+    Author          : Enoch Bibama
+    LinkedIn        : linkedin.com/in/enochbibama/
+    GitHub          : github.com/Enoch7791
+    Date Created    : 2025-07-08
+    Last Modified   : 2025-07-08
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN10-AU-000065
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> (STIG-ID-WN10-AU-000065).ps1 
+
+# PowerShell Script to disable "Logoff Success" auditing policy
+
+# Define the registry path
+$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Audit"
+
+# Check if the registry path exists
+if (-not (Test-Path $regPath)) {
+    # Create the path if it doesn't exist
+    New-Item -Path $regPath -Force
+    Write-Host "Registry path for auditing does not exist. Created it."
+} else {
+    Write-Host "Registry path for auditing already exists."
+}
+
+# Set the registry value to disable Logoff Success auditing
+$regValueName = "AuditLogoff"
+$regValueData = 0  # 0 means disabling the Logoff Success auditing
+
+# Apply the registry change
+Set-ItemProperty -Path $regPath -Name $regValueName -Value $regValueData -Type DWORD
+
+# Confirm the registry change
+Write-Host "Logoff Success auditing has been disabled successfully."
