@@ -1,0 +1,47 @@
+#
+.SYNOPSIS
+    This PowerShell script configure registry setting for PreventOverride
+
+.NOTES
+    Author          : Enoch Bibama
+    LinkedIn        : linkedin.com/in/enochbibama/
+    GitHub          : github.com/Enoch7791
+    Date Created    : 2025-07-07
+    Last Modified   : 2025-07-07
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN10-CC-000230
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> (STIG-ID-WN10-CC-000230).ps1 
+#>
+
+ # PowerShell Script to configure registry setting for PreventOverride
+
+# Define the registry path
+$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter"
+
+# Check if the path exists, if not create it
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force
+}
+
+# Define the registry value
+$regValue = "PreventOverride"
+$regType = "DWORD"
+$regData = 1  # 0x00000001 is equivalent to 1 in decimal
+
+# Set the registry value
+Set-ItemProperty -Path $regPath -Name $regValue -Value $regData -Type $regType
+
+# Confirm the registry value is set correctly
+Write-Host "Registry value PreventOverride set to $regData successfully." 
