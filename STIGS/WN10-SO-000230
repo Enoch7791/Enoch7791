@@ -1,0 +1,60 @@
+.SYNOPSIS
+    This PowerShell script configure registry setting for PreventOverride
+
+.NOTES
+    Author          : Enoch Bibama
+    LinkedIn        : linkedin.com/in/enochbibama/
+    GitHub          : github.com/Enoch7791
+    Date Created    : 2025-07-08
+    Last Modified   : 2025-07-08
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN10-SO-000230
+
+.TESTED ON
+    Date(s) Tested  : 
+    Tested By       : 
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> (STIG-ID-WN10-SO-000230).ps1 
+#>
+
+# PowerShell Script to enforce FIPS-compliant algorithms for encryption, hashing, and signing
+
+# Define the registry path for FIPS compliance
+$regPath = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\FIPSAlgorithmPolicy"
+
+# Check if the path exists
+if (-not (Test-Path $regPath)) {
+    # If the path doesn't exist, create it
+    New-Item -Path $regPath -Force
+    Write-Host "Created registry path for FIPSAlgorithmPolicy."
+} else {
+    Write-Host "Registry path for FIPSAlgorithmPolicy already exists."
+}
+
+# Define the registry value to enable FIPS compliance
+$regValueName = "Enabled"
+$regValueData = 1  # FIPS compliance enabled
+
+# Set the registry value
+Set-ItemProperty -Path $regPath -Name $regValueName -Value $regValueData -Type DWORD
+
+# Confirm the registry change
+Write-Host "Registry value for FIPS compliance (Enabled = 1) has been set successfully."
+
+# Optionally, enable the Group Policy setting for FIPS compliance as well
+# Enable FIPS-compliant algorithms via Local Group Policy
+
+# Ensure the Group Policy setting is set to 'Enabled' for FIPS compliance
+$gpoSetting = "Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\System cryptography: Use FIPS compliant algorithms for encryption, hashing, and signing"
+$gpoValue = "Enabled"
+
+# Apply the policy setting (this requires administrative rights to run)
+secedit /configure /cfg $gpoSetting /value $gpoValue
+Write-Host "Group Policy for FIPS compliance has been configured."
